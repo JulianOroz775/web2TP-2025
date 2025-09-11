@@ -23,7 +23,7 @@
                 <div class="collapse navbar-collapse" id="navbarNav">
                     <ul class="navbar-nav">
                         <li class="nav-item">
-                            <a class="nav-link" aria-current="page" href="index.php">Suplementos</a>
+                            <a class="nav-link" aria-current="page" href="listar">Suplementos</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" aria-current="page" href="staff.php">About</a>

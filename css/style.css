@@ -1,0 +1,11 @@
+.item-suplemento{
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.finalizada{
+    text-decoration: line-through;
+    color: gray;
+}
