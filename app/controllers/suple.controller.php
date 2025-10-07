@@ -20,7 +20,7 @@ class SupleController{
     function showSuplementos(){
 
         //obtengo las tareas del modelo
-       $suplementos = $this->model->getSuplementos();
+       $suplementos = $this->model->getAll();
     
        //le mando a la vista los suplementos, asi los muestra
        $this->view->showSuples($suplementos);
@@ -42,7 +42,7 @@ class SupleController{
 
         //inserto en la db
 
-        $id = $this->model->insertSuplemento($Marca,$Nombre,$Prioridad);
+        $id = $this->model->insert($Marca,$Nombre,$Prioridad);
 
         if($id){
             //redirigo a la pantalla principal
@@ -56,7 +56,7 @@ class SupleController{
     
     function removeSuplemento($id){
         
-        $this->model->deleteSuplemento($id);
+        $this->model->remove($id);
         
         header('Location: ' . BASE_URL);
     
@@ -65,7 +65,7 @@ class SupleController{
 
      function finishSuplemento($id){
         
-        $this->model->updateSuplemento($id);
+        $this->model->update($id);
         
         header('Location: ' . BASE_URL);
         

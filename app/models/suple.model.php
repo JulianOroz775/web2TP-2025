@@ -3,23 +3,27 @@
 
 class SupleModel{
 
-    // POR DEFAULT IMPLICITAMENTE EXISTE UN CONSTRUCTOR POR MAS QUE NO LO CODEE
+    private $db;
 
-    // CONEXION 
-    private function getConection(){
 
-        return new PDO('mysql:host=localhost;dbname=web2tp-2025;charset=utf8', 'root', '');
+    function __construct(){
+        // 1. Abro la conexion al instanciar
+        $this-> db = new PDO('mysql:host=localhost;dbname=web2tp-2025;charset=utf8', 'root', '');
     }
 
 
-    // OBTENGO LOS SUPLEMENTOS
-    function getSuplementos(){
+    /* CONEXION vieja
+    private function getConection(){
 
-        // 1. Abro la conexion
-        $db = $this->getConection();
+        return new PDO('mysql:host=localhost;dbname=web2tp-2025;charset=utf8', 'root', '');
+    } */
+
+
+    // OBTENGO LOS SUPLEMENTOS
+    function getAll(){
 
         // 2. Enviar la consulta (2 sub-pasos: prepare y execute)
-        $query = $db->prepare('SELECT * FROM suplementos2');
+        $query = $this->db->prepare('SELECT * FROM suplementos2');
         $query->execute();
 
         // 3. Obtengo la respuesta con un fetchAll (porque son muchos)
@@ -31,35 +35,29 @@ class SupleModel{
     }
 
     //Inserta el suplemento a la db
-    function insertSuplemento($Marca,$Nombre,$Prioridad){
-        
-        // 1. Abro la conexion
-        $db = $this->getConection();
+    function insert($Marca,$Nombre,$Prioridad){
 
         // 2. Enviar la consulta (2 sub-pasos: prepare y execute)
-        $query= $db->prepare('INSERT INTO suplementos2 (Marca,Nombre,Prioridad) VALUES(?,?,?)');
+        $query= $this->db->prepare('INSERT INTO suplementos2 (Marca,Nombre,Prioridad) VALUES(?,?,?)');
         $query->execute([$Marca,$Nombre,$Prioridad]);
 
         // 3. Obtengo y devuelvo el ID de la tarea nueva
-        return $db->lastInsertId();
+        return $this->db->lastInsertId();
 
     }
 
-    function deleteSuplemento($id){
-        // 1. Abro la conexion
-        $db = $this->getConection();
-
+    function remove($id){
+        
         // 2. Enviar la consulta (2 sub-pasos: prepare y execute)
-        $query= $db->prepare('DELETE FROM suplementos2 WHERE Suplemento_ID = ?');
+        $query= $this->db->prepare('DELETE FROM suplementos2 WHERE Suplemento_ID = ?');
         $query->execute([$id]);
 
     }
 
-    function updateSuplemento($id){
+    function update($id){
 
-        $db = $this->getConection();
-
-        $query= $db->prepare('UPDATE suplementos2 SET Stock = 0 WHERE Suplemento_ID = ?');
+        // 2. Enviar la consulta (2 sub-pasos: prepare y execute)
+        $query= $this->db->prepare('UPDATE suplementos2 SET Stock = 0 WHERE Suplemento_ID = ?');
         $query->execute([$id]);
 
     }
