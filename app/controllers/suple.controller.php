@@ -16,7 +16,7 @@ class SupleController{
     }
 
 
-    //obtengo los suplementos
+    //listo los suplementos
     function showSuplementos(){
 
         //obtengo las tareas del modelo
@@ -24,6 +24,17 @@ class SupleController{
     
        //le mando a la vista los suplementos, asi los muestra
        $this->view->showSuples($suplementos);
+    }
+
+    // listo un suplemento en especial
+    //obtengo los suplementos
+    function showSuplemento($id){
+
+        //obtengo las tareas del modelo
+       $suplementos = $this->model->get($id);
+    
+       //le mando a la vista los suplementos, asi los muestra
+       $this->view->showSuple($suplementos);
     }
 
 

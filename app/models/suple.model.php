@@ -8,15 +8,16 @@ class SupleModel{
 
     function __construct(){
         // 1. Abro la conexion al instanciar
-        $this-> db = new PDO('mysql:host=localhost;dbname=web2tp-2025;charset=utf8', 'root', '');
+        $this-> db = $this->getConection();
     }
 
 
-    /* CONEXION vieja
+   
     private function getConection(){
 
         return new PDO('mysql:host=localhost;dbname=web2tp-2025;charset=utf8', 'root', '');
-    } */
+    
+    } 
 
 
     // OBTENGO LOS SUPLEMENTOS
@@ -33,6 +34,23 @@ class SupleModel{
         return $suplementos;
     
     }
+
+    // OBTENGO un SUPLEMENTOS
+    function get($id){
+
+        // 2. Enviar la consulta (2 sub-pasos: prepare y execute)
+        $query = $this->db->prepare('SELECT * FROM suplementos2 WHERE Suplemento_ID = ?');
+        $query->execute([$id]);
+
+        // 3. Obtengo la respuesta con un fetchAll (porque son muchos)
+        $suplemento = $query->fetch(PDO::FETCH_OBJ);// arreglo de tareas
+
+
+        return $suplemento;
+    
+    }
+
+
 
     //Inserta el suplemento a la db
     function insert($Marca,$Nombre,$Prioridad){

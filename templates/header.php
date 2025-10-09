@@ -26,7 +26,7 @@
                             <a class="nav-link" aria-current="page" href="listar">Suplementos</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" aria-current="page" href="staff.php">About</a>
+                            <a class="nav-link" aria-current="page" href="/web2/WEB2-2025/web2TP-2025/admin">Admin</a>
                         </li>
                     </ul>
                 </div>

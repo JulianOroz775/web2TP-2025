@@ -9,3 +9,12 @@
     text-decoration: line-through;
     color: gray;
 }
+
+.card {
+    border-radius: 0.75rem;
+    transition: transform 0.2s ease;
+}
+.card:hover {
+    transform: translateY(-4px);
+}
+
