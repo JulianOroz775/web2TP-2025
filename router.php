@@ -1,13 +1,18 @@
 <?php
-
+require_once 'app/libs/response.php';
 include_once 'app/controllers/suple.controller.php';
 include_once 'app/controllers/marcas.controller.php';
 include_once 'app/controllers/admin.controller.php';
+include_once 'app/controllers/auth.controller.php';
 
+// ⬇️ Middlewares
+require_once 'app/middlewares/session.auth.middleware.php';
+require_once 'app/middlewares/verify.auth.middleware.php';
 
 // base_url para redirecciones y base tag
 define('BASE_URL', '//'.$_SERVER['SERVER_NAME'] . ':' . $_SERVER['SERVER_PORT'] . dirname($_SERVER['PHP_SELF']).'/');
 
+$res = new Response();
 
 $action = 'marcas'; // accion por defecto si no se envia ninguna
 if (!empty( $_GET['action'])) {
@@ -18,9 +23,27 @@ if (!empty( $_GET['action'])) {
 $params = explode('/', $action);
 
 
+
+
 switch($params[0]){
 
     // vista Marcas-Suplementos
+    case 'showLogin':
+        
+        $AuthController = new AuthContoller(); 
+        $AuthController->showLogin();
+
+        break;
+    
+    case 'login':
+        
+        $AuthController = new AuthContoller(); 
+        $AuthController->login();
+
+        break;
+    
+    
+    
     case 'listar':
         
         $SupleController = new SupleController(); 
@@ -51,7 +74,8 @@ switch($params[0]){
 
     // MODO ADMIN: 
     case 'admin':
-        
+        sessionAuthMiddleware($res); // Setea $res->user si existe session
+        verifyAuthMiddleware($res); // Verifica que el usuario esté logueado o redirige a login
         $AdminController = new AdminController();
         $AdminController->admin();
         
@@ -59,6 +83,9 @@ switch($params[0]){
 
     case 'adminMarcas':
         
+        sessionAuthMiddleware($res); // Setea $res->user si existe session
+        verifyAuthMiddleware($res); // Verifica que el usuario esté logueado o redirige a login
+
         $AdminController = new AdminController();
         $AdminController->adminMarcas();
         
@@ -66,39 +93,74 @@ switch($params[0]){
     
     case 'adminSuplementos':
         
+        sessionAuthMiddleware($res); // Setea $res->user si existe session
+        verifyAuthMiddleware($res); // Verifica que el usuario esté logueado o redirige a login
+
         $AdminController = new AdminController();
         $AdminController->adminSuplementos();
         
         break;
 
     case 'agregarMarca':
+
+        sessionAuthMiddleware($res); // Setea $res->user si existe session
+        verifyAuthMiddleware($res); // Verifica que el usuario esté logueado o redirige a login
         
         $AdminController = new AdminController();
         $AdminController->addMarca();
         
         break;
 
-    case 'agregarSuple':
+    case 'editarMarca':
         
-        $SupleController = new SupleController(); 
-        $SupleController->addSuplemento();
+        sessionAuthMiddleware($res); // Setea $res->user si existe session
+        verifyAuthMiddleware($res); // Verifica que el usuario esté logueado o redirige a login
+
+        $AdminController = new AdminController();
+        $AdminController->editarMarca();
         
         break;
 
-    case 'eliminar':
+     case 'eliminarMarca':
 
-        $SupleController = new SupleController(); 
-        $SupleController->removeSuplemento($params[1]);
+        sessionAuthMiddleware($res); // Setea $res->user si existe session
+        verifyAuthMiddleware($res); // Verifica que el usuario esté logueado o redirige a login
+        
+        $AdminController = new AdminController();
+        $AdminController->deleteMarca($params[1]);
+        
+        break;    
+
+    case 'agregarSuplemento':
+
+        sessionAuthMiddleware($res); // Setea $res->user si existe session
+        verifyAuthMiddleware($res); // Verifica que el usuario esté logueado o redirige a login
+        
+        $AdminController = new AdminController();
+        $AdminController->addSuplemento();
+        
+        break;
+    
+    case 'editarSuplemento':
+
+        sessionAuthMiddleware($res); // Setea $res->user si existe session
+        verifyAuthMiddleware($res); // Verifica que el usuario esté logueado o redirige a login
+        
+        $AdminController = new AdminController();
+        $AdminController->editarSuplemento();
+        
+        break;    
+
+    case 'eliminarSuplemento':
+
+        sessionAuthMiddleware($res); // Setea $res->user si existe session
+        verifyAuthMiddleware($res); // Verifica que el usuario esté logueado o redirige a login
+
+        $AdminController = new AdminController();
+        $AdminController->deleteSuplemento($params[1]);
        
         break;
 
-   
-    case 'finalizar':
-
-        $SupleController = new SupleController(); 
-        $SupleController->finishSuplemento($params[1]);
-
-        break;
     
     default:
         

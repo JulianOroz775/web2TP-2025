@@ -16,7 +16,7 @@
     <header>
         <nav class="navbar navbar-expand-lg bg-light">
             <div class="container-fluid">
-                <a class="navbar-brand" href="">Lista de Suplementos</a>
+                <a class="nav-link" href="<?php echo BASE_URL ?>listar">Suplementos</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
@@ -26,7 +26,7 @@
                             <a class="nav-link" aria-current="page" href="listar">Suplementos</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" aria-current="page" href="/web2/WEB2-2025/web2TP-2025/admin">Admin</a>
+                            <a class="nav-link" href="<?php echo BASE_URL ?>showLogin">Admin</a>
                         </li>
                     </ul>
                 </div>

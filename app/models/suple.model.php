@@ -53,16 +53,15 @@ class SupleModel{
 
 
     //Inserta el suplemento a la db
-    function insert($Marca,$Nombre,$Prioridad){
+    function insert($Marca,$Nombre,$Stock,$Id_marca){
 
         // 2. Enviar la consulta (2 sub-pasos: prepare y execute)
-        $query= $this->db->prepare('INSERT INTO suplementos2 (Marca,Nombre,Prioridad) VALUES(?,?,?)');
-        $query->execute([$Marca,$Nombre,$Prioridad]);
+        $query= $this->db->prepare('INSERT INTO suplementos2 (Marca,Nombre,Stock,id_marca) VALUES(?,?,?,?)');
+        $query->execute([$Marca,$Nombre,$Stock,$Id_marca]);
 
-        // 3. Obtengo y devuelvo el ID de la tarea nueva
-        return $this->db->lastInsertId();
 
     }
+
 
     function remove($id){
         
@@ -72,13 +71,21 @@ class SupleModel{
 
     }
 
-    function update($id){
+    // Actualiza todos los campos editables de un suplemento
+    function update($Marca,$Nombre,$Stock,$id_marca,$id){
 
-        // 2. Enviar la consulta (2 sub-pasos: prepare y execute)
-        $query= $this->db->prepare('UPDATE suplementos2 SET Stock = 0 WHERE Suplemento_ID = ?');
-        $query->execute([$id]);
+        $query = $this->db->prepare('UPDATE suplementos2 SET Marca = ?, Nombre = ?, Stock = ?, id_marca = ? WHERE Suplemento_ID = ?');
+        $query->execute([$Marca,$Nombre,$Stock,$id_marca,$id]);
 
     }
 
+    function delete($id){
+
+         $query = $this->db->prepare('DELETE FROM suplementos2 WHERE Suplemento_ID = ?');
+            
+         $query->execute([$id]);
+
+    }
+    
 
 }

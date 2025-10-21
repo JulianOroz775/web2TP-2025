@@ -45,34 +45,114 @@ class AdminController {
 
         function adminSuplementos(){
 
-            $this->view->adminView();
+            $Suplementos= $this->SupleModel->getAll();
+            $Marcas= $this->MarcasModel->getAll();
+
+            $this->view->adminSupleView($Suplementos,$Marcas);
 
         }
 
         function addMarca(){
         
-        //obtengo los datos del usuario
-        $Marca = $_POST['Marca'];
-    
-        //valido datos 
-        if(empty($Marca)){
-            $this->SupleView->showError("Faltan datos obligatorios");
-            die();
+            //obtengo los datos del usuario
+            $Marca = $_POST['Marca'];
+        
+            //valido datos 
+            if(empty($Marca)){
+                $this->SupleView->showError("Faltan datos obligatorios");
+                die();
+            }
+
+            //inserto en la db
+
+            $id = $this->MarcasModel->insert($Marca);
+
+            if($id){
+                //redirigo a la pantalla principal
+                header('Location: ' . BASE_URL . 'adminMarcas');
+            }else{
+                echo "Error al insertar tarea";
+            }
+
         }
 
-        //inserto en la db
+         function editarMarca(){
+        
+            //obtengo los datos del usuario
+            $Marca = $_POST['Marca'];
 
-        $id = $this->MarcasModel->insert($Marca);
+            $id = (int)$_POST['id'];
+        
+            //valido datos 
+            if(empty($Marca)){
+                $this->SupleView->showError("Faltan datos obligatorios");
+                die();
+            }
 
-        if($id){
-            //redirigo a la pantalla principal
-            header('Location: ' . BASE_URL);
-        }else{
-            echo "Error al insertar tarea";
+            $this->MarcasModel->update($Marca,$id);
+
+            header('Location: ' . BASE_URL . 'adminMarcas');
         }
 
-    }
+        function deleteMarca($id){
 
+            $this->MarcasModel->delete($id);
 
+            header('Location: ' . BASE_URL . 'adminMarcas');
+
+        }
+
+        //Suplementos
+
+        function addSuplemento(){
+            $Nombre = $_POST['Nombre'];
+            $Stock = $_POST['Stock'];
+            $Id_Marca = $_POST['id_marca'];
+            $Marca = $this->MarcasModel->getbyID($Id_Marca);
+            $M= $Marca->Marca;
+            
+           
+           
+            if( empty($Id_Marca) || empty($Stock)){
+                $this->SupleView->showError("Faltan datos obligatorios");
+                die();
+            }
+
+            $this->SupleModel->insert($M,$Nombre,$Stock,$Id_Marca);
+
+          
+            header('Location: ' . BASE_URL . 'adminSuplementos');
+           
+        }
+
+        function editarSuplemento(){
+
+            $id = (int)$_POST['id'];
+            $Nombre = $_POST['Nombre'];
+            $Stock = $_POST['Stock'];
+            $Id_Marca = $_POST['id_marca'];
+            $Marca = $this->MarcasModel->getbyID($Id_Marca);
+            $M= $Marca->Marca;
+            
+            
+            if( empty($Id_Marca) || empty($Stock) || empty($Nombre)){
+                $this->SupleView->showError("Faltan datos obligatorios");
+                die();
+            }
+
+            $this->SupleModel->update($M,$Nombre,$Stock,$Id_Marca,$id);
+
+          
+            header('Location: ' . BASE_URL . 'adminSuplementos');
+        }
+
+        function deleteSuplemento($id){
+
+            $this->SupleModel->delete($id);
+
+            header('Location: ' . BASE_URL . 'adminSuplementos');
+
+        }
+        
     }   
 

@@ -49,6 +49,21 @@
         
         }
 
+        function getbyID($id){
+
+            // 2. Enviar la consulta (2 sub-pasos: prepare y execute)
+            $query = $this->db->prepare('SELECT * FROM suplementos WHERE Suplemento_ID = ? ');
+            $query->execute([$id]);
+
+            // 3. Obtengo la respuesta con un fetchAll (porque son muchos)
+            $suplemento = $query->fetch(PDO::FETCH_OBJ);// arreglo de tareas
+
+
+            return $suplemento;
+        
+        }
+
+
 
         // OBTENGO un SUPLEMENTOS
         function get($id){
@@ -77,6 +92,23 @@
 
             // 3. Obtengo y devuelvo el ID de la tarea nueva
             return $this->db->lastInsertId();
+
+        }
+
+        function delete($id){
+
+            $query = $this->db->prepare('DELETE FROM suplementos WHERE Suplemento_ID = ?');
+            
+            $query->execute([$id]);
+
+        }
+
+        
+        function update($marca,$id){
+
+            // 2. Enviar la consulta (2 sub-pasos: prepare y execute)
+            $query= $this->db->prepare('UPDATE suplementos SET Marca = ? WHERE Suplemento_ID = ?');
+            $query->execute([$marca,$id]);
 
         }
  
