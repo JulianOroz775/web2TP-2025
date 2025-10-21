@@ -1,0 +1,91 @@
+<?php include 'templates/layout/header.phtml'; ?>
+
+<?php
+// Índice seguro: id_marca => objeto marca
+$marcasById = [];
+if (!empty($marcas)) {
+    foreach ($marcas as $m) {
+        $marcasById[(int)$m->marca_id] = $m;
+    }
+}
+?>
+
+<form action="agregarSuplemento" method="POST" class="p-4 bg-light rounded-3 shadow-sm">
+
+    <div class="mb-3">
+        <label for="prioridad" class="form-label">Marca</label>
+        <select name="id_marca" id="prioridad" class="form-select">
+            <?php foreach ($marcas as $marca) { ?>
+                <option value="<?= (int)$marca->marca_id ?>"><?= htmlspecialchars($marca->marca) ?></option>
+            <?php } ?>
+        </select>
+    </div>
+
+    <div class="mb-3">
+        <label for="nombre" class="form-label">Nombre</label>
+        <input type="text" name="Nombre" class="form-control" id="nombre" placeholder="Ej: Creatina">
+    </div>
+
+    <div class="mb-3">
+        <label for="Stock" class="form-label">Stock</label>
+        <input type="text" name="Stock" class="form-control" id="Stock" placeholder="Ej: 2 ">
+    </div>
+
+    <button type="submit" class="btn btn-primary w-100">Cargar</button>
+</form>
+
+<form method="POST" class="p-4 bg-light rounded-3 shadow-sm">
+
+    <label for="marca" class="form-label">Editar :</label>
+
+    <div class="mb-3">
+        <label for="prioridad2" class="form-label">Marca</label>
+        <select name="id_marca" id="prioridad2" class="form-select">
+            <?php foreach ($marcas as $marca) { ?>
+                <option value="<?= (int)$marca->marca_id ?>"><?= htmlspecialchars($marca->marca) ?></option>
+            <?php } ?>
+        </select>
+    </div>
+
+    <div class="mb-3">
+        <label for="Nombre" class="form-label">Nombre</label>
+        <input type="text" name="Nombre" class="form-control" id="Nombre" placeholder="Ej: Creatina">
+    </div>
+
+    <div class="mb-3">
+        <label for="Stock2" class="form-label">Stock</label>
+        <input type="text" name="Stock" class="form-control" id="Stock2" placeholder="Ej: 2 ">
+    </div>
+
+    <ul class="list-group">
+        <?php for ($i = 0, $n = count($productos); $i < $n; $i++) { ?>
+            <?php
+                $mid = (int)($productos[$i]->marca_id ?? 0);
+                $marcaNombre = isset($marcasById[$mid]) ? $marcasById[$mid]->marca : 'Sin marca';
+            ?>
+            <li class="list-group-item item-suplemento">
+                <div>
+                    <b class="font-weight-bold"><?= htmlspecialchars($marcaNombre) ?></b>
+                </div>
+                <div>
+                    <b class="font-weight-bold"><?= htmlspecialchars($productos[$i]->nombre) ?></b>
+                </div>
+                <div>
+                    <button
+                        type="submit"
+                        class="btn btn-warning"
+                        formmethod="post"
+                        formaction="editarSuplemento"
+                        name="id"
+                        value="<?= (int)$productos[$i]->producto_id ?>"
+                    >Editar</button>
+
+                    <a href="eliminarSuplemento/<?= (int)$productos[$i]->producto_id ?>" type="button" class="btn btn-danger m1-auto">Borrar</a>
+                </div>
+            </li>
+        <?php } ?>
+    </ul>
+
+</form>
+
+<?php include 'templates/layout/footer.phtml'; ?>

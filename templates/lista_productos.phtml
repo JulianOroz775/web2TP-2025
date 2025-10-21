@@ -1,0 +1,50 @@
+<?php
+include 'templates/layout/header.phtml';
+
+// Índice seguro: marca_id => objeto marca (evita usar id-1)
+$marcasById = [];
+if (!empty($marcas)) {
+    foreach ($marcas as $m) {
+        $marcasById[(int)$m->marca_id] = $m;
+    }
+}
+?>
+
+<div class="container mt-4">
+    <h2 class="mb-4 text-center">Listado de Suplementos</h2>
+
+    <div class="row g-3">
+        <?php for ($i = 0, $n = count($productos); $i < $n; $i++) { ?>
+            <?php
+                $p = $productos[$i];
+                $mid = (int)($p->marca_id ?? 0);
+                $marcaNombre = isset($marcasById[$mid]) ? $marcasById[$mid]->marca : 'Sin marca';
+            ?>
+            <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                <a
+                    href="/web2/WEB2-2025/web2TP-2025/suplemento/<?php echo (int)$p->producto_id; ?>"
+                    class="text-decoration-none text-dark"
+                    style="display:block"
+                    title="Ver suplemento">
+                    <div class="card h-100 shadow-sm <?php echo ((int)($p->stock ?? 0) <= 0 ? 'opacity-75' : ''); ?>">
+                        <div class="card-body">
+                            <h5 class="card-title mb-1">
+                                <strong><?php echo htmlspecialchars($marcaNombre); ?></strong>
+                            </h5>
+                            <p class="card-text mb-1">
+                                <?php echo htmlspecialchars($p->nombre); ?><br>
+                            </p>
+
+                            <?php if (!empty($p->descripcion)): ?>
+                                <p class="text-muted small mb-2"><?php echo htmlspecialchars($p->descripcion); ?></p>
+                            <?php endif; ?>
+
+                        </div>
+                    </div>
+                </a>
+            </div>
+        <?php } ?>
+    </div>
+</div>
+
+<?php include 'templates/layout/footer.phtml'; ?>

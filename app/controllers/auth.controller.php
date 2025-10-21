@@ -69,6 +69,13 @@ class AuthContoller{
 
     }
 
+    
+    public function logout() {
+        session_start(); // Va a buscar la cookie
+        session_destroy(); // Borra la cookie que se buscó
+        header('Location: ' . BASE_URL);
+    }
+
 
 
 }

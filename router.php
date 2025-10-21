@@ -41,10 +41,17 @@ switch($params[0]){
         $AuthController->login();
 
         break;
+     
+    case 'logout':
+        
+        $AuthController = new AuthContoller(); 
+        $AuthController->logout();
+
+        break;    
     
     
     
-    case 'listar':
+    case 'suplementos':
         
         $SupleController = new SupleController(); 
         $SupleController->showSuplementos();

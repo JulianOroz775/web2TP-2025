@@ -2,18 +2,15 @@
 
 include_once 'app/models/marcas.model.php';
 include_once 'app/views/marcas.views.php';
-include_once 'app/views/suple.views.php';
 
 class MarcasController{
 
     private $model;
     private $view;
-    private $Sview;
 
     function __construct(){
         $this->view = new MarcasView();
         $this->model = new MarcasModel();
-        $this->Sview = new SupleView();
     }
 
 
@@ -30,10 +27,11 @@ class MarcasController{
     function showMarcabyID($id){
 
         //obtengo las tareas del modelo
-       $marcas = $this->model->getAllbyID($id);
+       $marca = $this->model->get($id);
+       $suplementos = $this->model->getAllbyID($id);
     
        //le mando a la vista los suplementos, asi los muestra
-       $this->Sview->showSuples($marcas);
+       $this->view->showSuplesByMarca($suplementos,$marca);
     }
 
 }

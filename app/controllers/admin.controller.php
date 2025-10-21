@@ -108,8 +108,7 @@ class AdminController {
             $Nombre = $_POST['Nombre'];
             $Stock = $_POST['Stock'];
             $Id_Marca = $_POST['id_marca'];
-            $Marca = $this->MarcasModel->getbyID($Id_Marca);
-            $M= $Marca->Marca;
+           
             
            
            
@@ -118,7 +117,7 @@ class AdminController {
                 die();
             }
 
-            $this->SupleModel->insert($M,$Nombre,$Stock,$Id_Marca);
+            $this->SupleModel->insert($Nombre,$Stock,$Id_Marca);
 
           
             header('Location: ' . BASE_URL . 'adminSuplementos');
@@ -131,8 +130,6 @@ class AdminController {
             $Nombre = $_POST['Nombre'];
             $Stock = $_POST['Stock'];
             $Id_Marca = $_POST['id_marca'];
-            $Marca = $this->MarcasModel->getbyID($Id_Marca);
-            $M= $Marca->Marca;
             
             
             if( empty($Id_Marca) || empty($Stock) || empty($Nombre)){
@@ -140,7 +137,7 @@ class AdminController {
                 die();
             }
 
-            $this->SupleModel->update($M,$Nombre,$Stock,$Id_Marca,$id);
+            $this->SupleModel->update($Nombre,$Stock,$Id_Marca,$id);
 
           
             header('Location: ' . BASE_URL . 'adminSuplementos');

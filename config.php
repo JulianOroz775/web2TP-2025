@@ -1,0 +1,6 @@
+<?php
+
+    const MYSQL_USER = 'root';
+    const MYSQL_PASS = '';
+    const MYSQL_DB = 'web2tp-2025';
+    const MYSQL_HOST = 'localhost';

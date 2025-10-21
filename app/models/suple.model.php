@@ -1,30 +1,15 @@
 <?php
 
+require_once 'app/models/model.php';
 
-class SupleModel{
-
-    private $db;
-
-
-    function __construct(){
-        // 1. Abro la conexion al instanciar
-        $this-> db = $this->getConection();
-    }
-
-
-   
-    private function getConection(){
-
-        return new PDO('mysql:host=localhost;dbname=web2tp-2025;charset=utf8', 'root', '');
-    
-    } 
+class SupleModel extends Model{
 
 
     // OBTENGO LOS SUPLEMENTOS
     function getAll(){
 
         // 2. Enviar la consulta (2 sub-pasos: prepare y execute)
-        $query = $this->db->prepare('SELECT * FROM suplementos2');
+        $query = $this->db->prepare('SELECT * FROM productos');
         $query->execute();
 
         // 3. Obtengo la respuesta con un fetchAll (porque son muchos)
@@ -39,7 +24,7 @@ class SupleModel{
     function get($id){
 
         // 2. Enviar la consulta (2 sub-pasos: prepare y execute)
-        $query = $this->db->prepare('SELECT * FROM suplementos2 WHERE Suplemento_ID = ?');
+        $query = $this->db->prepare('SELECT * FROM productos WHERE producto_id = ?');
         $query->execute([$id]);
 
         // 3. Obtengo la respuesta con un fetchAll (porque son muchos)
@@ -53,11 +38,11 @@ class SupleModel{
 
 
     //Inserta el suplemento a la db
-    function insert($Marca,$Nombre,$Stock,$Id_marca){
+    function insert($Nombre,$Stock,$Id_marca){
 
         // 2. Enviar la consulta (2 sub-pasos: prepare y execute)
-        $query= $this->db->prepare('INSERT INTO suplementos2 (Marca,Nombre,Stock,id_marca) VALUES(?,?,?,?)');
-        $query->execute([$Marca,$Nombre,$Stock,$Id_marca]);
+        $query= $this->db->prepare('INSERT INTO productos (nombre,stock,marca_id) VALUES(?,?,?)');
+        $query->execute([$Nombre,$Stock,$Id_marca]);
 
 
     }
@@ -66,22 +51,22 @@ class SupleModel{
     function remove($id){
         
         // 2. Enviar la consulta (2 sub-pasos: prepare y execute)
-        $query= $this->db->prepare('DELETE FROM suplementos2 WHERE Suplemento_ID = ?');
+        $query= $this->db->prepare('DELETE FROM productos WHERE producto_id = ?');
         $query->execute([$id]);
 
     }
 
     // Actualiza todos los campos editables de un suplemento
-    function update($Marca,$Nombre,$Stock,$id_marca,$id){
+    function update($Nombre,$Stock,$id_marca,$id){
 
-        $query = $this->db->prepare('UPDATE suplementos2 SET Marca = ?, Nombre = ?, Stock = ?, id_marca = ? WHERE Suplemento_ID = ?');
-        $query->execute([$Marca,$Nombre,$Stock,$id_marca,$id]);
+        $query = $this->db->prepare('UPDATE productos SET nombre = ?, stock = ?, marca_id = ? WHERE producto_id = ?');
+        $query->execute([$Nombre,$Stock,$id_marca,$id]);
 
     }
 
     function delete($id){
 
-         $query = $this->db->prepare('DELETE FROM suplementos2 WHERE Suplemento_ID = ?');
+         $query = $this->db->prepare('DELETE FROM productos WHERE producto_id = ?');
             
          $query->execute([$id]);
 

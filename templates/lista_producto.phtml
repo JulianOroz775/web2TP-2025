@@ -1,0 +1,30 @@
+<?php include 'templates/layout/header.phtml'; ?>
+
+<div class="container mt-5">
+  <div class="card shadow-sm mx-auto" style="max-width: 500px;">
+    <div class="card-body text-center">
+      
+      <h4 class="card-title mb-2">
+        <strong class="text-primary"><?= htmlspecialchars($marca->marca) ?></strong>
+      </h4>    
+
+      <h5 class="card-subtitle mb-3 text-muted">
+        <?= htmlspecialchars($producto->nombre) ?>
+      </h5>
+
+      <p class="mb-2">
+        <span class="badge bg-<?= ($producto->stock > 0 ? 'success' : 'danger') ?>">
+          <?= ($producto->stock > 0 ? 'Stock: ' . (int)$producto->stock : 'Sin stock') ?>
+        </span>
+      </p>
+
+      <?php if (!empty($producto->descripcion)): ?>
+        <p class="card-text"><?= htmlspecialchars($producto->descripcion) ?></p>
+      <?php endif; ?>
+
+      <a href="/web2/WEB2-2025/web2TP-2025/" class="btn btn-outline-secondary mt-3">Volver al listado</a>
+    </div>
+  </div>
+</div>
+
+<?php include 'templates/layout/footer.phtml'; ?>

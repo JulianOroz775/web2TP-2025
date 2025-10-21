@@ -1,23 +1,9 @@
 <?php 
 
+require_once 'app/models/model.php';
 
-class UserModel{
+class UserModel extends Model{
 
-    private $db;
-
-
-    function __construct(){
-        
-        $this->db = $this->getConection();
-    }
-
-
-   
-    private function getConection(){
-
-        return new PDO('mysql:host=localhost;dbname=web2tp-2025;charset=utf8', 'root', '');
-    
-    }
 
     function getByUsername($username){
 
@@ -26,7 +12,6 @@ class UserModel{
 
         $user = $query->fetch(PDO::FETCH_OBJ);
 
-        var_dump($user);
         return $user;
 
         

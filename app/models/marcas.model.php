@@ -1,30 +1,15 @@
 <?php
 
+    require_once 'app/models/model.php';
     
-    class MarcasModel{
-
-        private $db;
-
-
-        function __construct(){
-            // 1. Abro la conexion al instanciar
-            $this-> db = $this->getConection();
-        }
-
-
-    
-        private function getConection(){
-
-            return new PDO('mysql:host=localhost;dbname=web2tp-2025;charset=utf8', 'root', '');
-        
-        } 
+    class MarcasModel extends Model{
 
 
         // OBTENGO LOS SUPLEMENTOS
         function getAll(){
 
             // 2. Enviar la consulta (2 sub-pasos: prepare y execute)
-            $query = $this->db->prepare('SELECT * FROM suplementos');
+            $query = $this->db->prepare('SELECT * FROM marcas');
             $query->execute();
 
             // 3. Obtengo la respuesta con un fetchAll (porque son muchos)
@@ -38,7 +23,7 @@
          function getAllbyID($id){
 
             // 2. Enviar la consulta (2 sub-pasos: prepare y execute)
-            $query = $this->db->prepare('SELECT * FROM suplementos2 WHERE id_marca = ? ');
+            $query = $this->db->prepare('SELECT * FROM productos WHERE marca_id = ? ');
             $query->execute([$id]);
 
             // 3. Obtengo la respuesta con un fetchAll (porque son muchos)
@@ -52,7 +37,7 @@
         function getbyID($id){
 
             // 2. Enviar la consulta (2 sub-pasos: prepare y execute)
-            $query = $this->db->prepare('SELECT * FROM suplementos WHERE Suplemento_ID = ? ');
+            $query = $this->db->prepare('SELECT * FROM marcas WHERE marca_id = ? ');
             $query->execute([$id]);
 
             // 3. Obtengo la respuesta con un fetchAll (porque son muchos)
@@ -69,7 +54,7 @@
         function get($id){
 
             // 2. Enviar la consulta (2 sub-pasos: prepare y execute)
-            $query = $this->db->prepare('SELECT * FROM suplementos WHERE Suplemento_ID = ?');
+            $query = $this->db->prepare('SELECT * FROM marcas WHERE marca_id = ?');
             $query->execute([$id]);
 
             // 3. Obtengo la respuesta con un fetchAll (porque son muchos)
@@ -87,7 +72,7 @@
         function insert($Marca){
 
             // 2. Enviar la consulta (2 sub-pasos: prepare y execute)
-            $query= $this->db->prepare('INSERT INTO suplementos (Marca) VALUES(?)');
+            $query= $this->db->prepare('INSERT INTO marcas (marca) VALUES(?)');
             $query->execute([$Marca]);
 
             // 3. Obtengo y devuelvo el ID de la tarea nueva
@@ -97,7 +82,7 @@
 
         function delete($id){
 
-            $query = $this->db->prepare('DELETE FROM suplementos WHERE Suplemento_ID = ?');
+            $query = $this->db->prepare('DELETE FROM marcas WHERE marca_id = ?');
             
             $query->execute([$id]);
 
@@ -107,7 +92,7 @@
         function update($marca,$id){
 
             // 2. Enviar la consulta (2 sub-pasos: prepare y execute)
-            $query= $this->db->prepare('UPDATE suplementos SET Marca = ? WHERE Suplemento_ID = ?');
+            $query= $this->db->prepare('UPDATE marcas SET marca = ? WHERE marca_id = ?');
             $query->execute([$marca,$id]);
 
         }

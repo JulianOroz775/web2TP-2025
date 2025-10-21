@@ -1,0 +1,50 @@
+<?php
+
+include 'templates/layout/header.phtml';
+?>
+
+<div class="container mt-4">
+  <h2 class="mb-4 text-center">
+    Listado de Suplementos <small class="text-muted">/ <?= htmlspecialchars($marca->marca) ?></small>
+  </h2>
+
+  <div class="row g-3">
+      <?php foreach ($suplementos as $s): ?>
+        <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+          <a
+            href="<?= BASE_URL ?>suplemento/<?= (int)$s->producto_id ?>"
+            class="text-decoration-none text-dark"
+            style="display:block"
+            title="Ver suplemento"
+          >
+            <div class="card h-100 shadow-sm <?= ((int)($s->Stock ?? 0) <= 0 ? 'opacity-75' : '') ?>">
+              <div class="card-body">
+                <h5 class="card-title mb-1">
+                  <strong><?= htmlspecialchars($marca->marca) ?></strong>
+                </h5>
+
+                <p class="card-text mb-1">
+                  <?= htmlspecialchars($s->nombre) ?><br>
+                </p>
+
+                <?php if (!empty($s->descripcion)): ?>
+                  <p class="text-muted small mb-2"><?= htmlspecialchars($s->descripcion) ?></p>
+                <?php endif; ?>
+
+                <?php if (isset($s->Stock)): ?>
+                  <?php if ((int)$s->Stock > 0): ?>
+                    <span class="badge bg-success">Stock: <?= (int)$s->Stock ?></span>
+                  <?php else: ?>
+                    <span class="badge bg-secondary">Sin stock</span>
+                  <?php endif; ?>
+                <?php endif; ?>
+              </div>
+            </div>
+          </a>
+        </div>
+      <?php endforeach; ?>
+    </div>
+
+<?php
+
+include 'templates/layout/footer.phtml';   

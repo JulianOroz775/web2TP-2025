@@ -1,6 +1,6 @@
 <?php 
 
-require_once './app/models/suple.model.php';
+include_once 'app/models/marcas.model.php';
 include_once 'app/models/suple.model.php';
 include_once 'app/views/suple.views.php';
 
@@ -8,11 +8,13 @@ include_once 'app/views/suple.views.php';
 class SupleController{
     private $model;
     private $view;
+    private $marcasModel;
 
 
     function __construct(){
         $this->view = new SupleView();
         $this->model = new SupleModel();
+        $this->marcasModel= new MarcasModel();
     }
 
 
@@ -21,9 +23,10 @@ class SupleController{
 
         //obtengo las tareas del modelo
        $suplementos = $this->model->getAll();
+       $marcas = $this->marcasModel->getAll();
     
        //le mando a la vista los suplementos, asi los muestra
-       $this->view->showSuples($suplementos);
+       $this->view->showSuples($suplementos,$marcas);
     }
 
     // listo un suplemento en especial
@@ -31,54 +34,15 @@ class SupleController{
     function showSuplemento($id){
 
         //obtengo las tareas del modelo
-       $suplementos = $this->model->get($id);
-    
+       $suplemento = $this->model->get($id);
+       $marca= $this->marcasModel->get($suplemento->marca_id);
+
+
        //le mando a la vista los suplementos, asi los muestra
-       $this->view->showSuple($suplementos);
+       $this->view->showSuple($suplemento,$marca);
     }
 
 
-    function addSuplemento(){
-        
-        //obtengo los datos del usuario
-        $Marca = $_POST['Marca'];
-        $Nombre = $_POST['Nombre'];
-        $Prioridad = $_POST['Prioridad'];
-
-        //valido datos 
-        if(empty($Marca) || empty($Prioridad)){
-            $this->view->showError("Faltan datos obligatorios");
-            die();
-        }
-
-        //inserto en la db
-
-        $id = $this->model->insert($Marca,$Nombre,$Prioridad);
-
-        if($id){
-            //redirigo a la pantalla principal
-            header('Location: ' . BASE_URL);
-        }else{
-            echo "Error al insertar tarea";
-        }
-
-    }
-
+   
     
-    function removeSuplemento($id){
-        
-        $this->model->remove($id);
-        
-        header('Location: ' . BASE_URL);
-    
-    }
-
-
-     function finishSuplemento($id){
-        
-        $this->model->update($id);
-        
-        header('Location: ' . BASE_URL);
-        
-    }
 }

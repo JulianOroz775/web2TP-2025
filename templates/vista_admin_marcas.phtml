@@ -1,0 +1,44 @@
+<?php
+include  'templates/layout/header.phtml';
+include 'templates/form.marcas.phtml'
+
+?>
+        <form method="POST" class="p-4 bg-light rounded-3 shadow-sm">
+
+            <div class="mb-3">
+                <label for="marca" class="form-label">Editar :</label>
+                <input type="text" name="Marca" class="form-control" id="marca" >
+            </div>
+        
+          <ul class="list-group">
+                <?php
+                    foreach($marcas as $marca){ ?>
+
+                        <li class="list-group-item item-suplemento ">
+                            <div>
+                                <b class= "font-weight-bold"><?php echo $marca->marca ?> </b>
+                            </div>
+                            <div>
+                                 <button
+                                    type="submit"
+                                    class="btn btn-warning"
+                                    formmethod="post"
+                                    formaction="editarMarca"
+                                    name="id"
+                                    value= "<?php echo (int) $marca->marca_id ?>"
+                                >Editar</button>
+                                
+                                <a href="eliminarMarca/<?php echo $marca->marca_id ?>" type="button" class='btn btn-danger m1-auto'>Borrar</a>    
+                            </div>
+
+                        </li>
+                
+                <?php } ?>
+
+            </ul>
+
+        </form>   
+
+            <?php
+        
+        include 'templates/layout/footer.phtml';

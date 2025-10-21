@@ -14,7 +14,14 @@
 
  **tienda online de suplementos nutricionales**.  
 
-La aplicación permite gestionar los distintos suplementos que se ofrecen para la venta, almacenando información básica como marca, nombre y cantidad disponible.  
-Además, se registra información adicional como el stock actual, la prioridad de reposición y una descripción del producto, con el fin de brindar al cliente detalles más completos al momento de realizar la compra.  
+    La aplicación permite gestionar los distintos suplementos que se ofrecen para la venta, almacenando información básica como marca, nombre, descripción y cantidad disponible.
+    Además, incorpora un panel de administración protegido para crear, editar y eliminar productos y marcas.
+    El sitio fue desarrollado con PHP (MVC), MySQL y Bootstrap, y se ejecuta sobre un servidor Apache.
+
+---
+
+**Datos para acceso como admin**.   
+
+    user: webadmin pass: admin
 
 ---
