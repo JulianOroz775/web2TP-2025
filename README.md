@@ -1,4 +1,4 @@
-# Trabajo Práctico Especial (TPE) - Parte 1
+# Trabajo Práctico Especial (TPE) - Parte 2
 
 ## Integrantes del grupo
 - Oroz Julian - orozjulian05@gmail.com  
